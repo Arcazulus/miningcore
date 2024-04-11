@@ -14,6 +14,7 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using Miningcore.Blockchain.Kaspa.Configuration;
 using Miningcore.Blockchain.Kaspa.Custom.Karlsencoin;
+using Miningcore.Blockchain.Kaspa.Custom.Nautilus;
 using Miningcore.Blockchain.Kaspa.Custom.Pyrin;
 using NLog;
 using Miningcore.Configuration;
@@ -215,7 +216,35 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
     {
         switch(coin.Symbol)
         {
-            case "KLS":
+                        case "NTL":
+                var nautilusNetwork = network.ToLower();
+
+                if(customBlockHeaderHasher is not Blake2b)
+                    customBlockHeaderHasher = new Blake2b(Encoding.UTF8.GetBytes(KaspaConstants.CoinbaseBlockHash));
+
+                if(customCoinbaseHasher is not Blake3)
+                    customCoinbaseHasher = new Blake3();
+
+                if ((nautilusNetwork == "testnet" && blockHeight >= KarlsencoinConstants.FishHashForkHeightTestnet))
+                {
+                    logger.Debug(() => $"fishHashHardFork activated");
+
+                    if(customShareHasher is not FishHashKarlsen)
+                    {
+                        var started = DateTime.Now;
+                        logger.Debug(() => $"Generating light cache");
+
+                        customShareHasher = new FishHashKarlsen();
+
+                        logger.Debug(() => $"Done generating light cache after {DateTime.Now - started}");
+                    }
+                }
+                else
+                    if(customShareHasher is not CShake256)
+                        customShareHasher = new CShake256(null, Encoding.UTF8.GetBytes(KaspaConstants.CoinbaseHeavyHash));
+
+                return new NautilusJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
+			case "KLS":
                 var karlsenNetwork = network.ToLower();
 
                 if(customBlockHeaderHasher is not Blake2b)

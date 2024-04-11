@@ -56,6 +56,15 @@ public static class KaspaConstants
     public const int PublicKeySizeECDSA = 33;
     public const int Blake2bSize256 = 32;
 }
+public static class BugnaConstants
+{
+    // List of BGA prefixes: https://github.com/bugnanetwork/bugnad/blob/master/util/address.go
+    public const string ChainPrefixDevnet = "bugnadev";
+    public const string ChainPrefixSimnet = "bugnasim";
+    public const string ChainPrefixTestnet = "bugnatest";
+    public const string ChainPrefixMainnet = "bugna";
+    
+}
 
 public static class KarlsencoinConstants
 {
@@ -69,9 +78,20 @@ public static class KarlsencoinConstants
     public const long FishHashForkHeightMainnet = 999999999999;
 }
 
+public static class NautilusConstants
+{
+    // List of NTL prefixes: https://github.com/Nautilus-Network/nautiliad/blob/master/util/address.go
+    public const string ChainPrefixDevnet = "nautiliadev";
+    public const string ChainPrefixSimnet = "nautilussim";
+    public const string ChainPrefixTestnet = "nautilustest";
+    public const string ChainPrefixMainnet = "nautilus";
+    
+
+}
+
 public static class PyrinConstants
 {
-    // List of KLS prefixes: https://github.com/Pyrinpyi/pyipad/blob/master/util/address.go
+    // List of PYI prefixes: https://github.com/Pyrinpyi/pyipad/blob/master/util/address.go
     public const string ChainPrefixDevnet = "pyipadev";
     public const string ChainPrefixSimnet = "pyrinsim";
     public const string ChainPrefixTestnet = "pyrintest";

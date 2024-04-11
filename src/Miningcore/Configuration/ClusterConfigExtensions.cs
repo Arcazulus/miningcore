@@ -257,8 +257,10 @@ public partial class KaspaCoinTemplate
     public override string GetAlgorithmName()
     {
         switch(Symbol)
-        {
-            case "KLS":
+        {            
+			case "NTL":
+                return "Karlsenhash";
+			case "KLS":
                 return "Karlsenhash";
             case "PYI":
                 return "Pyrinhash";
